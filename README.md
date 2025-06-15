@@ -6,12 +6,6 @@
 
 [Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Commands](#%EF%B8%8F-commands) • [Support](#-support)
 
----
-
-![VS Code Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/error-highlighter-pro)
-![VS Code Marketplace Rating](https://img.shields.io/visual-studio-marketplace/stars/error-highlighter-pro)
-![VS Code Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/error-highlighter-pro)
-[![GitHub](https://img.shields.io/github/license/jihadXYZ/error-highlighter-pro)](https://github.com/jihadXYZ)
 
 </div>
 
