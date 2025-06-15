@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🎯 Error Highlighter Pro
+# 🎯 Error Highlighter
 
 ### Revolutionize Your Debugging Experience with Smart Context Highlighting
 
