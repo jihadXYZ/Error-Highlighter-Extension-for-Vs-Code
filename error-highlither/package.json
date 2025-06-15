@@ -1,0 +1,77 @@
+{
+  "name": "error-highlighter",
+  "displayName": "Error Highlighter Pro",
+  "description": "Enhanced error highlighting with context - highlights errors, warnings, and their surrounding lines for better visibility",
+  "version": "1.0.0",
+  "publisher": "vscode-extensions",
+  "author": {
+    "name": "VS Code Extensions"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jihadXYZ/error-highlighter-pro"
+  },
+  "engines": {
+    "vscode": "^1.101.0"
+  },
+  "icon": "images/icon.png",
+  "categories": [
+    "Programming Languages",
+    "Linters",
+    "Other"
+  ],
+  "keywords": [
+    "error",
+    "warning",
+    "highlight",
+    "diagnostic",
+    "linting"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "error-highlither.toggle",
+        "title": "Toggle Error Highlighting",
+        "category": "Error Highlighter"
+      },
+      {
+        "command": "error-highlither.refresh",
+        "title": "Refresh Error Highlighting",
+        "category": "Error Highlighter"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "error-highlither.toggle"
+        },
+        {
+          "command": "error-highlither.refresh"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.101.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@typescript-eslint/eslint-plugin": "^8.31.1",
+    "@typescript-eslint/parser": "^8.31.1",
+    "eslint": "^9.25.1",
+    "typescript": "^5.8.3",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.5.2"
+  }
+}
