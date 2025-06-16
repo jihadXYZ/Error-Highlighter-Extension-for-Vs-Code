@@ -40,8 +40,8 @@ const vscode = __importStar(require("vscode"));
 let errorDecorationType;
 let warningDecorationType;
 let infoDecorationType;
-// State to track if highlighting is enabled
-let isHighlightingEnabled = true;
+// Decoration cache to avoid unnecessary updates
+const decorationCache = new Map();
 // Throttle timer
 let updateTimeout;
 /**
@@ -57,11 +57,10 @@ function activate(context) {
         // Set up event listeners
         setupEventListeners(context);
         // Initial decoration update
-        throttledUpdateDecorations();
+        updateDecorations();
     }
     catch (error) {
         console.error('Failed to activate Error Highlighter:', error);
-        vscode.window.showErrorMessage('Error Highlighter failed to activate. Please check the console for details.');
     }
 }
 function createDecorationTypes() {
@@ -109,102 +108,104 @@ function createDecorationTypes() {
     });
 }
 function registerCommands(context) {
-    // Register command to toggle error highlighting
-    const toggleCommand = vscode.commands.registerCommand('error-highlither.toggle', () => {
-        isHighlightingEnabled = !isHighlightingEnabled;
-        if (isHighlightingEnabled) {
-            vscode.window.showInformationMessage('Error highlighting enabled');
-            throttledUpdateDecorations();
-        }
-        else {
-            vscode.window.showInformationMessage('Error highlighting disabled');
-            clearAllDecorations();
-        }
-    });
     // Register command to refresh highlighting
     const refreshCommand = vscode.commands.registerCommand('error-highlither.refresh', () => {
-        throttledUpdateDecorations();
+        decorationCache.clear();
+        updateDecorations();
         vscode.window.showInformationMessage('Error highlighting refreshed');
     });
-    context.subscriptions.push(toggleCommand, refreshCommand);
+    context.subscriptions.push(refreshCommand);
 }
 function setupEventListeners(context) {
     // Listen for diagnostic changes
-    const diagnosticListener = vscode.languages.onDidChangeDiagnostics(() => {
-        if (isHighlightingEnabled) {
+    const diagnosticListener = vscode.languages.onDidChangeDiagnostics(({ uris }) => {
+        // Only update if diagnostics changed in visible editors
+        const visibleEditors = vscode.window.visibleTextEditors;
+        const shouldUpdate = uris.some(uri => visibleEditors.some(editor => editor.document.uri.toString() === uri.toString()));
+        if (shouldUpdate) {
             throttledUpdateDecorations();
         }
     });
     // Listen for active editor changes
     const editorListener = vscode.window.onDidChangeActiveTextEditor(() => {
-        if (isHighlightingEnabled) {
-            throttledUpdateDecorations();
-        }
+        throttledUpdateDecorations();
     });
     // Listen for document changes
-    const documentListener = vscode.workspace.onDidChangeTextDocument(() => {
-        if (isHighlightingEnabled) {
+    const documentListener = vscode.workspace.onDidChangeTextDocument(({ document }) => {
+        // Only update if the changed document is visible
+        const isVisible = vscode.window.visibleTextEditors.some(editor => editor.document === document);
+        if (isVisible) {
             throttledUpdateDecorations();
         }
     });
-    context.subscriptions.push(diagnosticListener, editorListener, documentListener, errorDecorationType, warningDecorationType, infoDecorationType);
+    // Clean up inactive editor cache periodically
+    const cacheCleanupInterval = setInterval(() => {
+        const visibleEditorUris = new Set(vscode.window.visibleTextEditors.map(editor => editor.document.uri.toString()));
+        for (const uri of decorationCache.keys()) {
+            if (!visibleEditorUris.has(uri)) {
+                decorationCache.delete(uri);
+            }
+        }
+    }, 30000); // Clean up every 30 seconds
+    context.subscriptions.push(diagnosticListener, editorListener, documentListener, errorDecorationType, warningDecorationType, infoDecorationType, { dispose: () => clearInterval(cacheCleanupInterval) });
 }
 function throttledUpdateDecorations() {
     if (updateTimeout) {
         clearTimeout(updateTimeout);
     }
-    updateTimeout = setTimeout(updateDecorations, 250);
+    updateTimeout = setTimeout(updateDecorations, 100); // Reduced from 250ms to 100ms
 }
 function updateDecorations() {
     try {
-        const activeEditor = vscode.window.activeTextEditor;
-        if (!activeEditor) {
-            return;
-        }
-        const document = activeEditor.document;
-        const diagnostics = vscode.languages.getDiagnostics(document.uri);
-        // Group diagnostics by severity
-        const errorRanges = [];
-        const warningRanges = [];
-        const infoRanges = [];
-        diagnostics.forEach(diagnostic => {
-            const startLine = Math.max(0, diagnostic.range.start.line - 1); // One line above
-            const endLine = Math.min(document.lineCount - 1, diagnostic.range.end.line + 1); // One line below
-            const range = new vscode.Range(startLine, 0, endLine, document.lineAt(endLine).text.length);
-            switch (diagnostic.severity) {
-                case vscode.DiagnosticSeverity.Error:
-                    errorRanges.push(range);
-                    break;
-                case vscode.DiagnosticSeverity.Warning:
-                    warningRanges.push(range);
-                    break;
-                case vscode.DiagnosticSeverity.Information:
-                case vscode.DiagnosticSeverity.Hint:
-                    infoRanges.push(range);
-                    break;
+        const visibleEditors = vscode.window.visibleTextEditors;
+        for (const editor of visibleEditors) {
+            const document = editor.document;
+            const uri = document.uri.toString();
+            // Check if we need to update this editor
+            const diagnostics = vscode.languages.getDiagnostics(document.uri);
+            const cachedDecorations = decorationCache.get(uri);
+            if (cachedDecorations &&
+                diagnostics.length ===
+                    (cachedDecorations.errors.length +
+                        cachedDecorations.warnings.length +
+                        cachedDecorations.infos.length)) {
+                continue; // Skip if nothing changed
             }
-        });
-        // Apply decorations
-        activeEditor.setDecorations(errorDecorationType, errorRanges);
-        activeEditor.setDecorations(warningDecorationType, warningRanges);
-        activeEditor.setDecorations(infoDecorationType, infoRanges);
+            // Group diagnostics by severity
+            const errorRanges = [];
+            const warningRanges = [];
+            const infoRanges = [];
+            diagnostics.forEach(diagnostic => {
+                const startLine = Math.max(0, diagnostic.range.start.line - 1);
+                const endLine = Math.min(document.lineCount - 1, diagnostic.range.end.line + 1);
+                const range = new vscode.Range(startLine, 0, endLine, document.lineAt(endLine).text.length);
+                switch (diagnostic.severity) {
+                    case vscode.DiagnosticSeverity.Error:
+                        errorRanges.push(range);
+                        break;
+                    case vscode.DiagnosticSeverity.Warning:
+                        warningRanges.push(range);
+                        break;
+                    case vscode.DiagnosticSeverity.Information:
+                    case vscode.DiagnosticSeverity.Hint:
+                        infoRanges.push(range);
+                        break;
+                }
+            });
+            // Cache the new decorations
+            decorationCache.set(uri, {
+                errors: errorRanges,
+                warnings: warningRanges,
+                infos: infoRanges
+            });
+            // Apply decorations
+            editor.setDecorations(errorDecorationType, errorRanges);
+            editor.setDecorations(warningDecorationType, warningRanges);
+            editor.setDecorations(infoDecorationType, infoRanges);
+        }
     }
     catch (error) {
         console.error('Failed to update decorations:', error);
-    }
-}
-function clearAllDecorations() {
-    try {
-        const activeEditor = vscode.window.activeTextEditor;
-        if (!activeEditor) {
-            return;
-        }
-        activeEditor.setDecorations(errorDecorationType, []);
-        activeEditor.setDecorations(warningDecorationType, []);
-        activeEditor.setDecorations(infoDecorationType, []);
-    }
-    catch (error) {
-        console.error('Failed to clear decorations:', error);
     }
 }
 // This method is called when your extension is deactivated
@@ -213,7 +214,7 @@ function deactivate() {
         if (updateTimeout) {
             clearTimeout(updateTimeout);
         }
-        clearAllDecorations();
+        decorationCache.clear();
         errorDecorationType?.dispose();
         warningDecorationType?.dispose();
         infoDecorationType?.dispose();
