@@ -1,136 +1,97 @@
 <div align="center">
 
-# 🎯 Error Highlighter Pro
+# Error Highlighter Pro
 
-### Revolutionize Your Debugging Experience with Smart Context Highlighting
-
-[Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Commands](#%EF%B8%8F-commands) • [Support](#-support)
+### Smart error highlighting that just works.
 
 ---
 
-[![Version](https://img.shields.io/visual-studio-marketplace/v/jihadXYZ.error-highlighter-pro)](https://marketplace.visualstudio.com/items?itemName=jihadXYZ.error-highlighter-pro)
-[![Installs](https://img.shields.io/visual-studio-marketplace/i/jihadXYZ.error-highlighter-pro)](https://marketplace.visualstudio.com/items?itemName=jihadXYZ.error-highlighter-pro)
-[![Rating](https://img.shields.io/visual-studio-marketplace/r/jihadXYZ.error-highlighter-pro)](https://marketplace.visualstudio.com/items?itemName=jihadXYZ.error-highlighter-pro)
-
 </div>
 
-Error Highlighter Pro enhances your coding experience by providing clear, contextual highlighting of errors and warnings in your code. It automatically highlights not just the error line, but also one line above and below for better context and visibility.
+## What is this? 🤔
 
-## ✨ Key Features
+A VS Code extension that makes your errors easier to spot and understand. It highlights not just the error line, but also the context around it - simple and effective.
 
-### 🔍 Smart Context Visualization
-- **Intelligent Highlighting**: Illuminates error lines plus surrounding context
-- **Visual Hierarchy**: Clear distinction between errors, warnings, and information
-- **Eye-Friendly Design**: Carefully chosen opacity levels for optimal readability
+```js
+// Example of how it works:
+function sayHello() {
+    // Line above is highlighted
+    consle.log("Hello!")  // Error line is highlighted in red
+    // Line below is highlighted
+}
+```
 
-### 🎨 Professional Color Scheme
-| Type | Style | Purpose |
-|------|--------|---------|
-| 🔴 **Errors** | Rich red background + border | Critical issues requiring immediate attention |
-| 🟡 **Warnings** | Warm amber background + border | Potential problems or code smells |
-| 🔵 **Info/Hints** | Subtle blue background + border | Suggestions and best practices |
+## Features 🚀
 
-### ⚡ Technical Excellence
-- **Performance First**: Optimized with smart throttling
-- **Theme Integration**: Adapts perfectly to light and dark themes
-- **Universal Compatibility**: Supports all VS Code diagnostic providers
+Simple, powerful, and fast:
 
-## 🎬 See It In Action
+- **Smart Highlighting**
+  - Shows errors in red
+  - Shows warnings in yellow
+  - Shows info in blue
+  - Highlights context (one line above and below)
 
-<div align="center">
-<img src="images/demo-dark.gif" alt="Error Highlighter Pro in Dark Theme" width="600"/>
+- **Zero Config**
+  - Works right after install
+  - No setup needed
+  - Works with all languages
 
-*Error highlighting in Dark Theme*
+- **Fast & Light**
+  - Real-time updates
+  - No slowdowns
+  - Low memory usage
 
-<img src="images/demo-light.gif" alt="Error Highlighter Pro in Light Theme" width="600"/>
-
-*Error highlighting in Light Theme*
-</div>
-
-## 📥 Installation
+## Install and Go ⚡
 
 1. Open VS Code
-2. Press `Ctrl+P` / `Cmd+P`
-3. Type `ext install error-highlighter-pro`
-4. Press Enter
+2. Install "Error Highlighter Pro"
+3. That's it! Start coding
 
-## 🚀 Quick Start
+## Make It Yours 🎨
 
-1. **Install**: Get the extension from VS Code Marketplace
-2. **Open**: Any file in your project
-3. **Work**: The extension activates automatically
-4. **Enjoy**: See errors and their context instantly highlighted
+Want different colors? Just add to your settings:
 
-## ⌨️ Command Palette
+```jsonc
+// settings.json
+{
+  "workbench.colorCustomizations": {
+    // Change these to any colors you like
+    "errorHighlighter.errorBackground": "#ff000020",   // Red with 20% opacity
+    "errorHighlighter.warningBackground": "#ffa50020", // Orange with 20% opacity
+    "errorHighlighter.infoBackground": "#007bff20"     // Blue with 20% opacity
+  }
+}
+```
 
-Access these commands via `Ctrl+Shift+P` / `Cmd+Shift+P`:
+## Need to Refresh? 🔄
 
-| Command | Description |
-|---------|-------------|
-| `Error Highlighter: Toggle` | Enable/disable highlighting |
-| `Error Highlighter: Refresh` | Force refresh highlights |
+Usually, everything updates automatically. But if you need to:
 
-## 🌍 Language Support
+1. Open Command Palette (`Ctrl+Shift+P` or `Cmd+Shift+P`)
+2. Type "Error Highlighter: Refresh"
 
-Works seamlessly with all languages supporting VS Code diagnostics:
-
-<div align="center">
-
-| Popular Languages | Framework Support | Build Tools |
-|------------------|-------------------|-------------|
-| JavaScript/TypeScript | React, Vue, Angular | ESLint, TSLint |
-| Python | Django, Flask | PyLint, MyPy |
-| Java | Spring, Jakarta | Maven, Gradle |
-| C/C++ | Qt, Boost | GCC, Clang |
-| HTML/CSS | Bootstrap, Tailwind | Stylelint |
-| PHP | Laravel, Symfony | PHP_CodeSniffer |
-| Ruby | Rails, Sinatra | RuboCop |
-| Go | Gin, Echo | golangci-lint |
-
-</div>
-
-## ⚙️ Configuration
-
-The extension works perfectly out of the box with carefully chosen defaults:
-
-- **Activation**: Automatic on VS Code startup
-- **Performance**: Optimized throttling (250ms)
-- **Colors**: Theme-aware with perfect contrast
-- **Context**: One line above and below errors
-- **Compatibility**: Works with all VS Code themes
-
-## 📋 Requirements
-
-- Visual Studio Code v1.101.0+
-- Any language with VS Code diagnostic support
-
-## 🔄 Recent Updates
-
-### Version 1.0.0 (Latest)
-- ✨ Initial release with smart context highlighting
-- 🚀 Performance optimization with throttling
-- 🎨 Theme-aware color system
-- 🌍 Universal language support
-- 🛠️ Robust error handling
-
-## 👨‍💻 About the Creator
+## About Me 👋
 
 <div align="center">
 
-### Created with ❤️ by Jihad
+### Jihad
+Student at **East Delta University**, Chittagong, Bangladesh
 
-[GitHub](https://github.com/jihadXYZ) • [Report Bug](https://github.com/jihadXYZ/error-highlighter-pro/issues) • [Request Feature](https://github.com/jihadXYZ/error-highlighter-pro/issues)
+[🔗 GitHub](https://github.com/jihadXYZ)
 
 </div>
 
-## 📄 License
+## Help & Support 🤝
 
-Released under the [MIT License](LICENSE).
+- Found a bug? [Report it here](https://github.com/jihadXYZ/error-highlighter-pro/issues)
+- Have an idea? [Share it here](https://github.com/jihadXYZ/error-highlighter-pro/issues)
 
 ---
 
 <div align="center">
 
-### ⭐ Enjoying Error Highlighter Pro? [Leave a Review](https://marketplace.visualstudio.com/items?itemName=error-highlighter-pro/reviews)!
+**Made with ❤️ in Bangladesh**
+
+[MIT License](LICENSE.md) • © 2025 Jihad
 
 </div>

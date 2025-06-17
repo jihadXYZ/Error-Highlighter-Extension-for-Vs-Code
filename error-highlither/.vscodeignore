@@ -9,3 +9,10 @@ vsc-extension-quickstart.md
 **/*.map
 **/*.ts
 **/.vscode-test.*
+test-files/**
+test.js
+test-file.js
+test-file.ts
+README.new.md
+.eslintrc.json
+node_modules/**
