@@ -1,97 +1,79 @@
-<div align="center">
 
-# Error Highlighter Pro
 
-### Smart error highlighting that just works.
+Error Highlighter Pro
+Catch errors faster with intelligent, context-aware highlighting.
 
----
 
-</div>
 
-## What is this? 🤔
-
-A VS Code extension that makes your errors easier to spot and understand. It highlights not just the error line, but also the context around it - simple and effective.
-
-```js
-// Example of how it works:
-function sayHello() {
-    // Line above is highlighted
-    consle.log("Hello!")  // Error line is highlighted in red
-    // Line below is highlighted
+Why Error Highlighter Pro? ✨
+Error Highlighter Pro is a Visual Studio Code extension that transforms how you debug. It highlights errors, warnings, and info messages with vivid colors and contextual cues, making your code easier to navigate and fix.
+// See it in action:
+function greet() {
+  // Context line highlighted
+  consle.log("Hello, World!"); // Error line in bold red
+  // Context line highlighted
 }
-```
 
-## Features 🚀
+Features 🔥
 
-Simple, powerful, and fast:
+Intelligent Highlighting  
 
-- **Smart Highlighting**
-  - Shows errors in red
-  - Shows warnings in yellow
-  - Shows info in blue
-  - Highlights context (one line above and below)
+🚨 Errors in bold red  
+⚠️ Warnings in vibrant yellow  
+ℹ️ Info in cool blue  
+Contextual lines (above/below) subtly highlighted
 
-- **Zero Config**
-  - Works right after install
-  - No setup needed
-  - Works with all languages
 
-- **Fast & Light**
-  - Real-time updates
-  - No slowdowns
-  - Low memory usage
+Zero Setup  
 
-## Install and Go ⚡
+📦 Install and go  
+🌐 Works with all languages  
+⚡ No configuration needed
 
-1. Open VS Code
-2. Install "Error Highlighter Pro"
-3. That's it! Start coding
 
-## Make It Yours 🎨
+Performant & Lightweight  
 
-Want different colors? Just add to your settings:
+⏱ Real-time updates  
+🪶 Minimal memory footprint  
+🚀 No lag, even in large projects
 
-```jsonc
-// settings.json
+
+
+Get Started 🚀
+
+Open VS Code  
+Search for Error Highlighter Pro in the Extensions view (Ctrl+Shift+X)  
+Click Install and dive into coding!
+
+Customize Your Experience 🎨
+Tweak highlight colors in your settings.json:
 {
   "workbench.colorCustomizations": {
-    // Change these to any colors you like
-    "errorHighlighter.errorBackground": "#ff000020",   // Red with 20% opacity
-    "errorHighlighter.warningBackground": "#ffa50020", // Orange with 20% opacity
-    "errorHighlighter.infoBackground": "#007bff20"     // Blue with 20% opacity
+    "errorHighlighter.errorBackground": "#ff4d4d33",   // Red with 20% opacity
+    "errorHighlighter.warningBackground": "#ffaa3333", // Orange with 20% opacity
+    "errorHighlighter.infoBackground": "#3399ff33"     // Blue with 20% opacity
   }
 }
-```
 
-## Need to Refresh? 🔄
+Manual Refresh 🔄
+The extension auto-updates, but if you need a quick refresh:  
 
-Usually, everything updates automatically. But if you need to:
+Open the Command Palette (Ctrl+Shift+P or Cmd+Shift+P)  
+Run Error Highlighter: Refresh
 
-1. Open Command Palette (`Ctrl+Shift+P` or `Cmd+Shift+P`)
-2. Type "Error Highlighter: Refresh"
+About the Creator 👨‍💻
+JihadComputer Science Student at East Delta University, Chittagong, Bangladesh  
 
-## About Me 👋
+🌍 GitHub  
+📫 Reach out via Issues
 
-<div align="center">
+Support & Contributions 🙌
 
-### Jihad
-Student at **East Delta University**, Chittagong, Bangladesh
+🐛 Spot a bug? File an issue  
+💡 Got a feature idea? Suggest it here  
+⭐ Love the extension? Leave a star on GitHub!
 
-[🔗 GitHub](https://github.com/jihadXYZ)
 
-</div>
 
-## Help & Support 🤝
 
-- Found a bug? [Report it here](https://github.com/jihadXYZ/error-highlighter-pro/issues)
-- Have an idea? [Share it here](https://github.com/jihadXYZ/error-highlighter-pro/issues)
-
----
-
-<div align="center">
-
-**Made with ❤️ in Bangladesh**
-
-[MIT License](LICENSE.md) • © 2025 Jihad
-
-</div>
+Crafted with ❤️ in BangladeshMIT License • © 2025 Jihad
