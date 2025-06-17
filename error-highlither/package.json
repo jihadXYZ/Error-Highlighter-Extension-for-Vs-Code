@@ -1,9 +1,9 @@
 {
-  "name": "error-highlighter",
+  "name": "error-highlighter-pro",
   "displayName": "Error Highlighter Pro",
   "description": "Enhanced error highlighting with context - highlights errors, warnings, and their surrounding lines for better visibility",
   "version": "1.0.0",
-  "publisher": "vscode-extensions",
+  "publisher": "jihadXYZ",
   "author": {
     "name": "Jihad",
     "url": "https://github.com/jihadXYZ"
@@ -12,10 +12,18 @@
     "type": "git",
     "url": "https://github.com/jihadXYZ/error-highlighter-pro"
   },
+  "bugs": {
+    "url": "https://github.com/jihadXYZ/error-highlighter-pro/issues"
+  },
+  "homepage": "https://github.com/jihadXYZ/error-highlighter-pro#readme",
   "engines": {
     "vscode": "^1.101.0"
   },
   "icon": "icon.png",
+  "galleryBanner": {
+    "color": "#C80000",
+    "theme": "dark"
+  },
   "categories": [
     "Programming Languages",
     "Linters",
@@ -26,7 +34,9 @@
     "warning",
     "highlight",
     "diagnostic",
-    "linting"
+    "linting",
+    "productivity",
+    "development"
   ],
   "activationEvents": [
     "onStartupFinished"
@@ -38,6 +48,32 @@
         "command": "error-highlighter.refresh",
         "title": "Refresh Error Highlighting",
         "category": "Error Highlighter"
+      }
+    ],
+    "colors": [
+      {
+        "id": "errorHighlighter.errorBackground",
+        "description": "Background color for error highlights",
+        "defaults": {
+          "dark": "#ff000020",
+          "light": "#ff000010"
+        }
+      },
+      {
+        "id": "errorHighlighter.warningBackground",
+        "description": "Background color for warning highlights",
+        "defaults": {
+          "dark": "#ffa50020",
+          "light": "#ffa50010"
+        }
+      },
+      {
+        "id": "errorHighlighter.infoBackground",
+        "description": "Background color for info highlights",
+        "defaults": {
+          "dark": "#007bff20",
+          "light": "#007bff10"
+        }
       }
     ]
   },

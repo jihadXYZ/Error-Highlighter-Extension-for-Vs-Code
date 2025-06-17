@@ -8,14 +8,13 @@
 
 ---
 
-![VS Code Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/error-highlighter-pro)
-![VS Code Marketplace Rating](https://img.shields.io/visual-studio-marketplace/stars/error-highlighter-pro)
-![VS Code Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/error-highlighter-pro)
-[![GitHub](https://img.shields.io/github/license/jihadXYZ/error-highlighter-pro)](https://github.com/jihadXYZ)
+[![Version](https://img.shields.io/visual-studio-marketplace/v/jihadXYZ.error-highlighter-pro)](https://marketplace.visualstudio.com/items?itemName=jihadXYZ.error-highlighter-pro)
+[![Installs](https://img.shields.io/visual-studio-marketplace/i/jihadXYZ.error-highlighter-pro)](https://marketplace.visualstudio.com/items?itemName=jihadXYZ.error-highlighter-pro)
+[![Rating](https://img.shields.io/visual-studio-marketplace/r/jihadXYZ.error-highlighter-pro)](https://marketplace.visualstudio.com/items?itemName=jihadXYZ.error-highlighter-pro)
 
 </div>
 
-Take your coding experience to the next level with Error Highlighter Pro! This intelligent extension revolutionizes how you view and fix code issues by highlighting not just error lines, but also their surrounding context, making debugging intuitive and efficient.
+Error Highlighter Pro enhances your coding experience by providing clear, contextual highlighting of errors and warnings in your code. It automatically highlights not just the error line, but also one line above and below for better context and visibility.
 
 ## ✨ Key Features
 
