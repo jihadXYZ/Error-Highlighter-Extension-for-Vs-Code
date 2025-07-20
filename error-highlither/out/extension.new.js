@@ -151,7 +151,6 @@ function updateDecorations() {
         // Group diagnostics by severity
         const errorRanges = [];
         const warningRanges = [];
-        const infoRanges = [];
         diagnostics.forEach(diagnostic => {
             const startLine = Math.max(0, diagnostic.range.start.line - 1); // One line above
             const endLine = Math.min(document.lineCount - 1, diagnostic.range.end.line + 1); // One line below
@@ -163,10 +162,7 @@ function updateDecorations() {
                 case vscode.DiagnosticSeverity.Warning:
                     warningRanges.push(range);
                     break;
-                case vscode.DiagnosticSeverity.Information:
-                case vscode.DiagnosticSeverity.Hint:
-                    infoRanges.push(range);
-                    break;
+                // Info and Hint diagnostics are ignored
             }
         });
         // Apply decorations

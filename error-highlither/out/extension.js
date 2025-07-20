@@ -39,7 +39,6 @@ const vscode = __importStar(require("vscode"));
 // Decoration types for different severity levels
 let errorDecorationType;
 let warningDecorationType;
-let infoDecorationType;
 // Use WeakMap to prevent memory leaks - keys will be garbage collected automatically
 const decorationCache = new WeakMap();
 // Debounce timer
@@ -94,19 +93,6 @@ function createDecorationTypes() {
             backgroundColor: 'rgba(255, 165, 0, 0.2)',
         }
     });
-    infoDecorationType = vscode.window.createTextEditorDecorationType({
-        backgroundColor: { id: 'errorHighlighter.infoBackground' },
-        border: '2px solid #007bff',
-        isWholeLine: true,
-        overviewRulerColor: new vscode.ThemeColor('editorInfo.foreground'),
-        overviewRulerLane: vscode.OverviewRulerLane.Right,
-        light: {
-            backgroundColor: 'rgba(0, 123, 255, 0.05)',
-        },
-        dark: {
-            backgroundColor: 'rgba(0, 123, 255, 0.15)',
-        }
-    });
 }
 function setupEventListeners(context) {
     // Optimize diagnostic changes handling
@@ -134,7 +120,7 @@ function setupEventListeners(context) {
         requestUpdate();
     }));
     // Cleanup on deactivation
-    context.subscriptions.push(errorDecorationType, warningDecorationType, infoDecorationType);
+    context.subscriptions.push(errorDecorationType, warningDecorationType);
 }
 function requestUpdate() {
     if (updateTimeout) {
@@ -156,13 +142,12 @@ async function updateDecorations() {
         const cache = decorationCache.get(document);
         if (cache &&
             cache.version === document.version &&
-            diagnostics.length === (cache.errors.length + cache.warnings.length + cache.infos.length)) {
+            diagnostics.length === (cache.errors.length + cache.warnings.length)) {
             return;
         }
         // Group diagnostics by severity
         const errorRanges = [];
         const warningRanges = [];
-        const infoRanges = [];
         // Process diagnostics in batch
         for (const diagnostic of diagnostics) {
             if (isDisposed)
@@ -177,10 +162,7 @@ async function updateDecorations() {
                 case vscode.DiagnosticSeverity.Warning:
                     warningRanges.push(range);
                     break;
-                case vscode.DiagnosticSeverity.Information:
-                case vscode.DiagnosticSeverity.Hint:
-                    infoRanges.push(range);
-                    break;
+                // Info and Hint diagnostics are ignored
             }
         }
         if (isDisposed)
@@ -190,13 +172,11 @@ async function updateDecorations() {
             version: document.version,
             errors: errorRanges,
             warnings: warningRanges,
-            infos: infoRanges
         });
         // Apply decorations in batch
         await Promise.all([
             editor.setDecorations(errorDecorationType, errorRanges),
             editor.setDecorations(warningDecorationType, warningRanges),
-            editor.setDecorations(infoDecorationType, infoRanges)
         ]);
     }
     catch (error) {
@@ -216,7 +196,6 @@ function deactivate() {
         // WeakMap will clean up automatically
         errorDecorationType?.dispose();
         warningDecorationType?.dispose();
-        infoDecorationType?.dispose();
     }
     catch (error) {
         console.error('Error during deactivation:', error);

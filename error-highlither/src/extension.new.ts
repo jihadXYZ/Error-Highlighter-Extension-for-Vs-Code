@@ -4,7 +4,6 @@ import * as vscode from 'vscode';
 let errorDecorationType: vscode.TextEditorDecorationType;
 let warningDecorationType: vscode.TextEditorDecorationType;
 
-
 // State to track if highlighting is enabled
 let isHighlightingEnabled = true;
 
@@ -65,8 +64,6 @@ function createDecorationTypes() {
             backgroundColor: 'rgba(255, 165, 0, 0.2)',
         }
     });
-
-
 }
 
 function registerCommands(context: vscode.ExtensionContext) {
@@ -119,7 +116,6 @@ function setupEventListeners(context: vscode.ExtensionContext) {
         documentListener,
         errorDecorationType,
         warningDecorationType,
-    
     );
 }
 
@@ -143,7 +139,6 @@ function updateDecorations() {
         // Group diagnostics by severity
         const errorRanges: vscode.Range[] = [];
         const warningRanges: vscode.Range[] = [];
-        const infoRanges: vscode.Range[] = [];
 
         diagnostics.forEach(diagnostic => {
             const startLine = Math.max(0, diagnostic.range.start.line - 1); // One line above
@@ -160,17 +155,14 @@ function updateDecorations() {
                 case vscode.DiagnosticSeverity.Warning:
                     warningRanges.push(range);
                     break;
-                case vscode.DiagnosticSeverity.Information:
-                case vscode.DiagnosticSeverity.Hint:
-                    infoRanges.push(range);
-                    break;
+                // Info and Hint diagnostics are ignored
             }
         });
 
         // Apply decorations
         activeEditor.setDecorations(errorDecorationType, errorRanges);
         activeEditor.setDecorations(warningDecorationType, warningRanges);
-    
+
     } catch (error) {
         console.error('Failed to update decorations:', error);
     }
