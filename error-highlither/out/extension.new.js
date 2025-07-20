@@ -39,7 +39,6 @@ const vscode = __importStar(require("vscode"));
 // Decoration types for different severity levels
 let errorDecorationType;
 let warningDecorationType;
-let infoDecorationType;
 // State to track if highlighting is enabled
 let isHighlightingEnabled = true;
 // Throttle timer
@@ -93,20 +92,6 @@ function createDecorationTypes() {
             backgroundColor: 'rgba(255, 165, 0, 0.2)',
         }
     });
-    // Info decoration (blue background)
-    infoDecorationType = vscode.window.createTextEditorDecorationType({
-        backgroundColor: 'rgba(0, 123, 255, 0.1)',
-        border: '3px solid #007bff',
-        isWholeLine: true,
-        overviewRulerColor: '#007bff',
-        overviewRulerLane: vscode.OverviewRulerLane.Right,
-        light: {
-            backgroundColor: 'rgba(0, 123, 255, 0.05)',
-        },
-        dark: {
-            backgroundColor: 'rgba(0, 123, 255, 0.15)',
-        }
-    });
 }
 function registerCommands(context) {
     // Register command to toggle error highlighting
@@ -147,7 +132,7 @@ function setupEventListeners(context) {
             throttledUpdateDecorations();
         }
     });
-    context.subscriptions.push(diagnosticListener, editorListener, documentListener, errorDecorationType, warningDecorationType, infoDecorationType);
+    context.subscriptions.push(diagnosticListener, editorListener, documentListener, errorDecorationType, warningDecorationType);
 }
 function throttledUpdateDecorations() {
     if (updateTimeout) {
@@ -187,7 +172,6 @@ function updateDecorations() {
         // Apply decorations
         activeEditor.setDecorations(errorDecorationType, errorRanges);
         activeEditor.setDecorations(warningDecorationType, warningRanges);
-        activeEditor.setDecorations(infoDecorationType, infoRanges);
     }
     catch (error) {
         console.error('Failed to update decorations:', error);
@@ -201,7 +185,6 @@ function clearAllDecorations() {
         }
         activeEditor.setDecorations(errorDecorationType, []);
         activeEditor.setDecorations(warningDecorationType, []);
-        activeEditor.setDecorations(infoDecorationType, []);
     }
     catch (error) {
         console.error('Failed to clear decorations:', error);
@@ -216,7 +199,6 @@ function deactivate() {
         clearAllDecorations();
         errorDecorationType?.dispose();
         warningDecorationType?.dispose();
-        infoDecorationType?.dispose();
     }
     catch (error) {
         console.error('Failed to deactivate extension:', error);
